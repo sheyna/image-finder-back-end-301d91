@@ -6,6 +6,9 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 
+// import the photo modules
+const getPhotosHandler = require('./photos.js');
+
 // instantiate express server by calling express
 const app = express();
 
@@ -17,19 +20,20 @@ const PORT = process.env.PORT || 3002;
 
 // ROUTES
 app.get('/', (req, res) => {
-  res.status(200).send('Hello there!')
+  res.status(200).send('Hello there!');
 });
+
+// route for photo requests
+app.get('/photos', getPhotosHandler);
 
 app.get('*', (req, res) => {
   res.status(404).send('These are not the droids you are looking for...')
 });
 
-// CLASSES
-
 // ERRORS
 app.use((error, request, response, next) => {
-  console.log(error.message)
-  response.status(500).send(error.message)
+  console.log(error.message);
+  response.status(500).send(error.message);
 });
 
 // LISTEN
